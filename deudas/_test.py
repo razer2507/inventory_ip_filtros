@@ -81,13 +81,13 @@ def test_delete_postgres():
 
 def test_filter_view_postgres():
     args = {
-        'monto':200,
-        'cliente':'paul'
+        
     }
 
     filtered_data = Repositorio.filter_view(
         **args
     )
+    print(filtered_data)
     def cumplen_filtro(tuple)->bool:
         for i in items:  # noqa: F821
             deuda_act = Deuda(
@@ -113,7 +113,7 @@ def test_filter_view_postgres():
         if args.get('id'):  # noqa: SIM102
             if deuda_act.id != args.get('id'):
                 return False
-
+        
         assert all(filter(cumplen_filtro,filtered_data))
             
         

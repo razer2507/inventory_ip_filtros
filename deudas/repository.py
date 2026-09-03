@@ -45,6 +45,7 @@ class PostgresDeudasRepository(DeudasRepository):
         query = "INSERT INTO deudas(cliente,monto_deudor,fecha_venc) VALUES(%s,%s,%s)"
         self.cursor.execute(query, (deuda.cliente, deuda.monto, deuda.fecha))
         self.conn.commit()
+        
 
     def view_all(self) -> list:
         query = "SELECT *FROM deudas"
@@ -60,16 +61,15 @@ class PostgresDeudasRepository(DeudasRepository):
         query = "DELETE FROM deudas WHERE id=%s"
         self.cursor.execute(query, (deuda.id,))
         self.conn.commit()
-
+    
     def filter_view(self, **kwargs):
-
         # Crea una consulta base, luego dependiendo de los parametros pasados, nuevas condiciones se sumaran.
         base_query = "SELECT *FROM deudas WHERE 1=1"
 
         if kwargs.get("monto"):
             base_query += " AND monto_deudor >= %s "
         if kwargs.get("id"):
-            base_query += "AND id =%s "
+            base_query += " AND id =%s "
         if kwargs.get("cliente"):
             base_query += " AND CLIENTE =%s "
         if kwargs.get("start_date") and kwargs.get("end_date"):
@@ -84,3 +84,4 @@ class PostgresDeudasRepository(DeudasRepository):
         self.cursor.execute(base_query, tuple(kwargs.values()))
         # Retorna los datos que cumplen las condiciones pasadas por el usuario
         return self.cursor.fetchall()
+
