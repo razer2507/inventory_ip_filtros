@@ -1,0 +1,5 @@
+cat << 'EOF' > flet.yaml
+android:
+  target_sdk_version: 35
+  compile_sdk_version: 35
+EOF
